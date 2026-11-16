@@ -1,0 +1,7 @@
+{
+  "name": "activity-bar",
+  "title": "Activity Bar",
+  "version": "0.1.0",
+  "description": "VSCode-style vertical Activity Bar for Herdr side panels",
+  "place": "none"
+}
