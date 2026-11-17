@@ -1,9 +1,5 @@
 {
   "id": "root",
-  "cloned_from": {
-    "name": "main",
-    "version": "0.1.13"
-  },
   "type": "row",
   "children": [
     {
@@ -79,7 +75,6 @@
       },
       "min": 44,
       "max": 480,
-      "background": "chrome",
       "resizable": false
     },
     {
@@ -279,8 +274,16 @@
       "resizable": false
     }
   ],
-  "background": "canvas",
+  "background": "chrome",
   "theme": "cukup-malam",
+  "colors": {
+    "background": "#1a161300",
+    "canvas": "#1a161300",
+    "chrome": "#1a16144d",
+    "input": "#1a161300",
+    "raised": "#1a161300",
+    "surface": "#1a161300"
+  },
   "font": "CommitMono Nerd Font",
   "font_size": 12,
   "ui_font": "Uncut Sans",
@@ -288,6 +291,7 @@
     14,
     12
   ],
+  "terminal_opacity": 0.15000000596046448,
   "divider": {
     "width": 1,
     "color": "border"
@@ -297,6 +301,7 @@
     12,
     16
   ],
-  "preview": "layouts/marherdr.svg",
-  "terminal_menu": "menu"
+  "preview": "layouts/marherdr-transparan.svg",
+  "terminal_menu": "menu",
+  "window_blur": true
 }

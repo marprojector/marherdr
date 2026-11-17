@@ -1,9 +1,32 @@
 # Marherdr
 
 A dark, low-chrome Herdr layout: collapsed icon rail on the right, machines and
-spaces on the left, one panel stack that switches by icon.
+spaces on the left, one panel stack that switches by icon. Two files ship it:
+`marherdr-transparan` (`window_blur`, translucent chrome, translucent terminal)
+and `marherdr-offtransparan` (the same tree, solid). An eye button at the bottom
+of the rail flips between them.
 
-![Marherdr](preview.jpg)
+![Marherdr](../docs/transparan.png)
+
+## The two variants
+
+Both are byte-identical apart from the look keys on the root node, so switching
+never reshuffles the window:
+
+```json
+// marherdr-transparan
+{ "window_blur": true, "background": "chrome", "terminal_opacity": 0.15,
+  "colors": { "background": "#1a161300", "canvas": "#1a161300",
+              "chrome": "#1a16144d", "surface": "#1a161300",
+              "raised": "#1a161300", "input": "#1a161300" } }
+
+// marherdr-offtransparan
+{ "background": "canvas" }
+```
+
+`colors.background` is the load-bearing key. It paints the layer under
+everything; leave it opaque and alpha anywhere else still composites to a solid
+window. That is the one a build gets wrong first.
 
 ## What you see
 
@@ -77,8 +100,20 @@ Mods, all `place: none`: `workspace-chrome`, `machine-vitals`, `better-sidebar`,
 Themes: `cukup-malam` (dark) and `cukup-terang` (light), plus `cukup-kopi` and
 `cukup-senja` as alternates.
 
-Commands used: `layout.hide`, `layout.show`, `layout.select`. Data:
+Commands used: `layout.hide`, `layout.show`, `layout.select`, `layout.set`. Data:
 `layout()`, `theme()`, `spaces()`, `agents()`, `shared()`.
+
+### The eye toggle
+
+`mods/activity-bar/main.js` adds `toggleTranslucency()`. It deep-copies `layout()`
+and calls `layout.set` with either the transparent root keys above or with them
+removed and `background` back to `canvas`. Nothing writes files directly; the app
+persists the tree it is handed. The button renders `mods/filetree/eye.svg` when the
+root has `window_blur: true`, `eye-off.svg` otherwise.
+
+Two details a rebuild gets wrong: the button must sit in the rail's bottom group
+next to the panel toggle, and it must `stop_propagation()` on mouse down or the
+rail's own drag eats the click.
 
 Three mods ship a Rust helper binary and are excluded here because the build is
 `arm64` macOS only: `branch-pr/bin/herdr-pr`, `branch-issue/bin/herdr-linear`,

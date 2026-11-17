@@ -41,6 +41,33 @@ export default class ActivityBar extends View {
     }
   }
 
+  // Transparan blur on/off: menulis ulang tree layout lewat layout.set, jadi
+  // tidak menyentuh file dan langsung berlaku.
+  toggleTranslucency() {
+    const root = layout();
+    if (!root || typeof root !== "object") return;
+    const next = JSON.parse(JSON.stringify(root));
+    if (next.window_blur === true) {
+      delete next.colors;
+      delete next.terminal_opacity;
+      next.window_blur = false;
+      next.background = "canvas";
+    } else {
+      next.window_blur = true;
+      next.background = "chrome";
+      next.terminal_opacity = 0.15;
+      next.colors = {
+        background: "#1a161300",
+        canvas: "#1a161300",
+        chrome: "#1a16144d",
+        surface: "#1a161300",
+        raised: "#1a161300",
+        input: "#1a161300",
+      };
+    }
+    run("layout.set", { layout: next });
+  }
+
   render() {
     const t = theme();
     const root = layout();
@@ -140,6 +167,24 @@ export default class ActivityBar extends View {
           .w_full()
           .items_center()
           .gap(4)
+          .child(
+            div()
+              .id("activity-translucency")
+              .size(36)
+              .flex()
+              .items_center()
+              .justify_center()
+              .rounded(6)
+              .cursor_pointer()
+              .text_color(root?.window_blur === true ? (t.foreground ?? "#ffffff") : t.dim)
+              .hover((s) => s.bg(t.hover).text_color(t.foreground))
+              .tooltip(root?.window_blur === true ? "Transparansi: nyala" : "Transparansi: mati")
+              .on_mouse_down("left", (_e, cx) => cx.stop_propagation())
+              .on_click(() => this.toggleTranslucency())
+              .child(
+                svg(root?.window_blur === true ? "mods/filetree/eye.svg" : "mods/filetree/eye-off.svg").size(18)
+              )
+          )
           .child(
             div()
               .id("activity-panel-toggle")
