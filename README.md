@@ -23,8 +23,8 @@ opacity differs, so switching does not reshuffle anything.
 
 ![Marherdr solid](docs/normal.png)
 
-*marherdr-offtransparan.* Same tree, solid window: every pixel opaque, so text sits on a flat
-background and screen sharing shows what you see.
+*marherdr-offtransparan* — the same desktop, the same panes, the window now fully opaque. Text sits on
+a flat background and screen sharing shows exactly what you see.
 
 ## The toggle
 
