@@ -6,11 +6,10 @@ keeps the same arrangement solid. A toggle in the right rail flips between them.
 
 ![Marherdr transparent](docs/transparan.png)
 
-*marherdr-transparan.* The wallpaper behind the picture is a sample added so the frost is visible —
-Herdr shows your own desktop, not this gradient. The unchecked frame is at
-[`docs/transparan-alpha.png`](docs/transparan-alpha.png) and carries real alpha (22.9 % of its pixels
-fully clear, 73.7 % partial), so an image viewer that respects alpha will put *your* background behind
-the window.
+*marherdr-transparan* on a real desktop — a macOS screenshot, not a mockup. The wallpaper is visible
+through the sidebar, the terminal and the gaps between panes, blurred by the window server. The
+app-only frame with real alpha (55–255) is at
+[`docs/transparan-alpha.png`](docs/transparan-alpha.png).
 
 ## Two layouts
 
