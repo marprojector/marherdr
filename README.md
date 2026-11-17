@@ -6,8 +6,11 @@ keeps the same arrangement solid. A toggle in the right rail flips between them.
 
 ![Marherdr transparent](docs/transparan.png)
 
-**This PNG carries real alpha, not a gradient.** The window chrome is see-through in the file itself;
-your image viewer decides what shows behind it.
+*marherdr-transparan.* The wallpaper behind the picture is a sample added so the frost is visible —
+Herdr shows your own desktop, not this gradient. The unchecked frame is at
+[`docs/transparan-alpha.png`](docs/transparan-alpha.png) and carries real alpha (22.9 % of its pixels
+fully clear, 73.7 % partial), so an image viewer that respects alpha will put *your* background behind
+the window.
 
 ## Two layouts
 
@@ -20,6 +23,9 @@ Both are the same four-icon rail, the same sidebar and the same panel stack. Onl
 opacity differs, so switching does not reshuffle anything.
 
 ![Marherdr solid](docs/normal.png)
+
+*marherdr-offtransparan.* Same tree, solid window: every pixel opaque, so text sits on a flat
+background and screen sharing shows what you see.
 
 ## The toggle
 
