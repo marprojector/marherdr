@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/logo.png" alt="Marherdr" width="132">
+</p>
+
 # Marherdr
 
 A Herdr layout that follows your desktop. Two variants share one look: **marherdr-transparan** lets
