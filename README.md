@@ -11,6 +11,8 @@ through the sidebar, the terminal and the gaps between panes, blurred by the win
 app-only frame with real alpha (55–255) is at
 [`docs/transparan-alpha.png`](docs/transparan-alpha.png).
 
+Don't want to wire it up yourself? [Paste this into your agent](#hand-it-to-your-agent).
+
 ## Two layouts
 
 | Layout | Window | Use it when |
@@ -64,7 +66,36 @@ then the pane, then a 28 px status row with branch, directory, agent and progres
 Type: `CommitMono Nerd Font` 12 px in terminals, `Uncut Sans` for the UI. Theme `cukup-malam`, with
 `cukup-terang` for light mode and `cukup-kopi` / `cukup-senja` as alternates.
 
-## Install
+## Hand it to your agent
+
+Copy the block below into Claude Code, omp, Codex — anything that can run shell commands — and it
+installs the layout, then proves the transparency works instead of assuming it.
+
+```text
+Install the Marherdr layout in my Herdr. Follow the steps in order and report only what you actually ran.
+
+1. Find the app home and keep it in a variable for the rest of this task:
+   `APP="${HERDR_APP_HOME:-$HOME/.config/herdr-app}"; test -d "$APP" && echo "$APP"`. Stop if it is missing.
+2. Clone: `git clone --depth 1 https://github.com/marprojector/marherdr /tmp/marherdr`.
+3. Before copying, back up the mods this repo overrides: for each of `activity-bar` and `tabs-graph`
+   that already exists under `$APP/mods/`, copy it to `$APP/mods/<name>.bak-$(date +%s)`.
+4. Copy in: `marherdr/layouts/*.json` -> `$APP/layouts/`, `marherdr/themes/cukup-*.json` -> `$APP/themes/`,
+   `marherdr/mods/*` -> `$APP/mods/`. Skip every `gpui-kit.d.ts`; Herdr regenerates it on start.
+5. Check: `herdr-app check mods/activity-bar` must print `check passed`, and
+   `jq empty "$APP"/layouts/marherdr-*.json` must exit 0.
+6. Apply: `herdr-app do layout.switch --name marherdr-transparan`.
+7. Prove the transparency rather than assuming it: `herdr-app shot /tmp/marherdr.png`, then
+   `python3 -c "from PIL import Image;print(Image.open('/tmp/marherdr.png').convert('RGBA').getchannel('A').getextrema())"`.
+   An opaque window reports (255, 255); this layout reports a minimum well below 100.
+8. If step 7 came back opaque, check that `$APP/layouts/marherdr-transparan.json` still has
+   `"window_blur": true` and `"colors": { "background": "#1a161300" }`. That background key is what
+   makes or breaks it: while it stays opaque, no alpha above it can show the desktop.
+9. Report: the app home, the files copied, `herdr-app status` (layout + errors), and the alpha range.
+
+Do not modify my theme or my other layouts, and do not delete anything outside the backups from step 3.
+```
+
+## Install by hand
 
 ```sh
 APP=~/.config/herdr-app          # or $HERDR_APP_HOME
